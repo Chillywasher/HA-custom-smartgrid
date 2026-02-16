@@ -1,0 +1,24 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "battery_rates_sensor": "[%key:common::config_flow::data::battery_soc_sensor%]",
+          "current_rates_sensor": "[%key:common::config_flow::data::current_rates_sensor%]",
+          "next_day_rates_sensor": "[%key:common::config_flow::data::next_day_rates_sensor%]"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect_battery_soc": "[%key:common::config_flow::error::cannot_connect_battery_soc%]",
+      "cannot_connect_current_rates": "[%key:common::config_flow::error::cannot_connect_current_rates%]",
+      "cannot_connect_next_day_rates": "[%key:common::config_flow::error::cannot_connect_next_day_rates%]",
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    }
+  }
+}

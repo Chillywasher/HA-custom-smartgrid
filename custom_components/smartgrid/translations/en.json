@@ -1,0 +1,24 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "cannot_connect_battery_soc": "Failed to connect to Battery SoC sensor",
+            "cannot_connect_current_rates": "Failed to connect to Current Rates sensor",
+            "cannot_connect_next_day_rates": "Failed to connect to Next Day Rates sensor",
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "battery_soc_sensor": "Battery SoC Sensor",
+                    "current_rates_sensor": "Current Rates Sensor",
+                    "next_day_rates_sensor": "Next Day Rates Sensor"
+                }
+            }
+        }
+    }
+}

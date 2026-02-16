@@ -1,0 +1,17 @@
+{
+  "domain": "smartgrid",
+  "name": "SmartGrid",
+  "codeowners": [
+    "@chillywasher"
+  ],
+  "config_flow": true,
+  "dependencies": ["octopus_energy", "foxcloud"],
+  "documentation": "https://www.home-assistant.io",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "quality_scale": "bronze",
+  "requirements": ["polars~=1.38.1"],
+  "version": "1.0.0",
+  "ssdp": [],
+  "zeroconf": []
+}
