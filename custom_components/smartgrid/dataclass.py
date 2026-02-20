@@ -1,13 +1,6 @@
 from datetime import datetime
 from dataclasses import dataclass
 
-#
-# @dataclass
-# class BatteryScheduleModel:
-#     date_on: datetime
-#     date_off: datetime
-#     rate: float
-
 
 @dataclass
 class RatesModel:
@@ -33,24 +26,7 @@ class SmartGridConfigModel:
     maximum_charge_per_period_wh: float
     minimum_battery_level_wh: float
     n_cheapest_rates: int
-    solar_energy_profile: str
     rates_limit: int
-
-# @dataclass
-# class SmartGridScheduleModel:
-#     period_from: datetime
-#     period_to: datetime
-#     battery_start: float
-#     loads: float
-#     solar: float
-#     battery_end: float
-#     soc_start: int
-#     soc_end: int
-#     rates: float
-#     grid: float
-#     cost: float
-#     force_charge: bool
-#     last_updated: datetime
 
 
 @dataclass

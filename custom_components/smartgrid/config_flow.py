@@ -30,6 +30,8 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     next_day_rates = hass.states.get(data[CONF_NEXT_DAY_RATES_SENSOR])
     battery_soc = hass.states.get(data[CONF_BATTERY_SOC_SENSOR])
 
+    # TODO: Check that the uptodate rates have been populated inside the sensors
+
     if not current_rates:
         raise CannotConnectToCurrentRates
 

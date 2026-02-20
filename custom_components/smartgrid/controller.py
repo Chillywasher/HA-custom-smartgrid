@@ -2,14 +2,13 @@ import itertools
 import logging
 import math
 import operator
-import dataclasses
 
-from datetime import datetime, timezone
+from datetime import datetime
 
 from homeassistant.core import HomeAssistant
 
 from .dataclass import RatesModel, SmartGridConfigModel, SmartGridPeriod, SmartGridDataSchedule
-from .const import HOUR, MINUTE, START, END, VALUE_INC_VAT, ENERGY
+from .const import HOUR, MINUTE, START, END, VALUE_INC_VAT, ENERGY, DATA_SCHEDULE, DATA_REPORT, TOTAL_COST
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -28,7 +27,7 @@ class SmartGrid:
         self.current_rates_sensor = current_rates_sensor
         self.next_day_rates_sensor = next_day_rates_sensor
         self.config = SmartGridConfigModel(
-            n_cheapest_rates=12,
+            n_cheapest_rates=3,
             inverter_minimum_energy=0,
             battery_capacity_wh=12400 / 1000,
             enable_battery_controller=True,
@@ -36,7 +35,6 @@ class SmartGrid:
             loads_energy_profile="LOADS_1",
             maximum_charge_per_period_wh=4500 / 1000,
             minimum_battery_level_wh=1500 / 1000,
-            solar_energy_profile="NO_SOLAR",
             rates_limit=36,
         )
         self.sensor_timestamp = None
@@ -58,7 +56,7 @@ class SmartGrid:
             start_battery_level=current_battery_level,
             template=template)
 
-        sort_cost = operator.attrgetter('total_cost')
+        sort_cost = operator.attrgetter(TOTAL_COST)
         sorted_schedules = sorted(schedules, key=sort_cost)
 
         trim = 5
@@ -70,13 +68,15 @@ class SmartGrid:
                     "Total cost (£)": round(schedule.total_cost, 2),
                     "Charging periods": periods
             })
-        return {
-            "schedule": sorted_schedules[0],
-            "report": {
-                "title": f"Top {trim} schedules",
-                "data": s_list
+        if sorted_schedules:
+            return {
+                DATA_SCHEDULE: sorted_schedules[0],
+                DATA_REPORT: {
+                    "title": f"Top {trim} schedules",
+                    "data": s_list
+                }
             }
-        }
+        return {}
 
     def get_schedule_template(self) -> SmartGridDataSchedule:
         """
@@ -95,32 +95,32 @@ class SmartGrid:
 
         loads = [
             {
-                "hour": 0,
-                "minute": 0,
-                "energy": 9600,
+                HOUR: 0,
+                MINUTE: 0,
+                ENERGY: 9600,
             },
             {
-                "hour": 8,
-                "minute": 0,
-                "energy": 12000,
+                HOUR: 8,
+                MINUTE: 0,
+                ENERGY: 12000,
             },
             {
-                "hour": 16,
-                "minute": 0,
-                "energy": 8000,
+                HOUR: 16,
+                MINUTE: 0,
+                ENERGY: 8000,
             },
             {
-                "hour": 20,
-                "minute": 0,
-                "energy": 7000,
+                HOUR: 20,
+                MINUTE: 0,
+                ENERGY: 7000,
             }
         ]
 
         solar = [
                 {
-                    "hour": 0,
-                    "minute": 0,
-                    "energy": 0,
+                    HOUR: 0,
+                    MINUTE: 0,
+                    ENERGY: 0,
                 }
             ]
 

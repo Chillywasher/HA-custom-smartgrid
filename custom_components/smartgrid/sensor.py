@@ -10,7 +10,7 @@ from homeassistant.helpers.typing import StateType
 from .coordinator import SmartGridCoordinator
 from .dataclass import SmartGridDataSchedule
 from .entity import SmartGridEntity
-from .const import DOMAIN, CHARGING_TIMES, LAST_UPDATED, SCHEDULE, CHARGING_PERIODS
+from .const import DOMAIN, CHARGING_TIMES, DATA_LAST_UPDATED, DATA_SCHEDULE, CHARGING_PERIODS
 
 
 @dataclass(frozen=True)
@@ -35,16 +35,16 @@ async def async_setup_entry(hass: HomeAssistant, entry, async_add_entities) -> N
                 entity_description=SmartGridSensorDescription(
                     key=CHARGING_TIMES,
                     name="Charging Times",
-                    state=lambda data: data[SCHEDULE].force_charge,
+                    state=lambda data: data[DATA_SCHEDULE].force_charge,
                     format=lambda value: get_first_charging_period(value),
                 ),
             ),
             ReportSensor(
                 coordinator=coordinator,
                 entity_description=SmartGridSensorDescription(
-                    key=LAST_UPDATED,
+                    key=DATA_LAST_UPDATED,
                     name="Last Updated",
-                    state=lambda data: data[LAST_UPDATED],
+                    state=lambda data: data[DATA_LAST_UPDATED],
                 )
             ),
             ]
@@ -113,9 +113,9 @@ class ChargingTimesSensor(SmartGridSensor):
     def extra_state_attributes(self):
         """Return entity specific state attributes."""
         data = self.coordinator.data
-        schedule: SmartGridDataSchedule = data[SCHEDULE]
+        schedule: SmartGridDataSchedule = data[DATA_SCHEDULE]
         return {
-            SCHEDULE: schedule,
+            DATA_SCHEDULE: schedule,
             CHARGING_PERIODS: self.format_charging_periods(schedule.force_charge),
-            LAST_UPDATED: data[LAST_UPDATED],
+            DATA_LAST_UPDATED: data[DATA_LAST_UPDATED],
         }

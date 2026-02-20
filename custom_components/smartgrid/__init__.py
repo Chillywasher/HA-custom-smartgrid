@@ -16,7 +16,10 @@ _LOGGER = logging.getLogger(__name__)
 
 _PLATFORMS: list[Platform] = [
     Platform.SENSOR,
+    Platform.SWITCH,
+    Platform.BINARY_SENSOR
 ]
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.info("This is the SmartGrid integration")
