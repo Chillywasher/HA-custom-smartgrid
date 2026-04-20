@@ -27,7 +27,7 @@ class SmartGridSwitchDescription(SwitchEntityDescription):
 SWITCHES: list[SmartGridSwitchDescription] = [
     SmartGridSwitchDescription(
         key=SMARTGRID_ENABLED,
-        name="Enabled",
+        name="SmartGrid Enabled",
     )
 ]
 
@@ -108,8 +108,8 @@ class SmartGridSwitch(SmartGridEntity, SwitchEntity):
 
         data: SmartGridDataSchedule = self.coordinator.data[DATA_SCHEDULE]
         is_on = [
-            get_prefix(dt.day) + str(dt.hour).zfill(2) + str(dt.minute).zfill(2)
-            for dt in data.force_charge
+            get_prefix(rate.start.day) + str(rate.start.hour).zfill(2) + str(rate.start.minute).zfill(2)
+            for rate in data.charging_periods
         ]
         return key in is_on
 

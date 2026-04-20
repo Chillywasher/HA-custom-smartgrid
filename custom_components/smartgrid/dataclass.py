@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class RatesModel:
+class Rate:
     start: datetime
     end: datetime
     value_inc_vat: float
@@ -18,13 +18,13 @@ class SmartGridPeriod:
 
 @dataclass
 class SmartGridConfigModel:
-    battery_capacity_wh: float
-    enable_battery_controller: bool
-    inverter_keepalive_per_period_wh: float
+    # battery_capacity_kwh: float
+    # enable_battery_controller: bool
+    inverter_keepalive_per_period_kwh: float
     inverter_minimum_energy: float
-    loads_energy_profile: str
-    maximum_charge_per_period_wh: float
-    minimum_battery_level_wh: float
+    # loads_energy_profile: str
+    maximum_charge_per_period_kwh: float
+    minimum_battery_level_kwh: float
     n_cheapest_rates: int
     rates_limit: int
 
@@ -36,7 +36,7 @@ class SmartGridDataSchedule:
     rates: list[float]
     solar: list[float]
     start: list[datetime]
-    force_charge: list[datetime]
+    charging_periods: tuple[Rate, ...]
     total_cost: float = 0
     battery_end: list[float] | None = None
     battery_start: list[float] | None = None
@@ -44,5 +44,3 @@ class SmartGridDataSchedule:
     grid: list[float] | None = None
     soc_end: list[float] | None = None
     soc_start: list[float] | None = None
-    iteration: int = 0
-    subiteration: int = 0

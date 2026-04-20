@@ -4,7 +4,6 @@ import logging
 from collections import defaultdict
 from dataclasses import dataclass
 from typing import Callable, Any
-from datetime import datetime
 
 from homeassistant.components.binary_sensor import BinarySensorEntityDescription, BinarySensorEntity
 from homeassistant.components.binary_sensor import DOMAIN as COMPONENT
@@ -12,7 +11,7 @@ from homeassistant.core import HomeAssistant
 
 from .entity import SmartGridEntity
 from .const import (
-    DOMAIN, DATA_CHARGE_NOW, SWITCH_PREFIX
+    DOMAIN, DATA_CHARGE_NOW
 )
 from .coordinator import SmartGridCoordinator
 

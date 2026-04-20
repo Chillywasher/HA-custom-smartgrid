@@ -3,7 +3,9 @@
     "step": {
       "user": {
         "data": {
-          "battery_rates_sensor": "[%key:common::config_flow::data::battery_soc_sensor%]",
+          "battery_soc_sensor": "[%key:common::config_flow::data::battery_soc_sensor%]",
+          "battery_min_soc_sensor": "[%key:common::config_flow::data::battery_min_soc_sensor%]",
+          "battery_capacity_sensor": "[%key:common::config_flow::data::battery_capacity_sensor%]",
           "current_rates_sensor": "[%key:common::config_flow::data::current_rates_sensor%]",
           "next_day_rates_sensor": "[%key:common::config_flow::data::next_day_rates_sensor%]"
         }
@@ -11,6 +13,8 @@
     },
     "error": {
       "cannot_connect_battery_soc": "[%key:common::config_flow::error::cannot_connect_battery_soc%]",
+      "cannot_connect_battery_min_soc": "[%key:common::config_flow::error::cannot_connect_battery_min_soc%]",
+      "cannot_connect_battery_capacity": "[%key:common::config_flow::error::cannot_connect_battery_capacity%]",
       "cannot_connect_current_rates": "[%key:common::config_flow::error::cannot_connect_current_rates%]",
       "cannot_connect_next_day_rates": "[%key:common::config_flow::error::cannot_connect_next_day_rates%]",
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",

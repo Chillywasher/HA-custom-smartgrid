@@ -5,6 +5,7 @@
         },
         "error": {
             "cannot_connect_battery_soc": "Failed to connect to Battery SoC sensor",
+            "cannot_connect_battery_min_soc": "Failed to connect to Battery Minimum SoC sensor",
             "cannot_connect_current_rates": "Failed to connect to Current Rates sensor",
             "cannot_connect_next_day_rates": "Failed to connect to Next Day Rates sensor",
             "cannot_connect": "Failed to connect",
@@ -14,7 +15,9 @@
         "step": {
             "user": {
                 "data": {
-                    "battery_soc_sensor": "Battery SoC Sensor",
+                    "battery_soc_sensor": "Battery SoC Sensor (%)",
+                    "battery_min_soc_sensor": "Battery Minimum SoC Sensor (%)",
+                    "battery_capacity_sensor": "Battery Capacity Sensor (kWh)",
                     "current_rates_sensor": "Current Rates Sensor",
                     "next_day_rates_sensor": "Next Day Rates Sensor"
                 }

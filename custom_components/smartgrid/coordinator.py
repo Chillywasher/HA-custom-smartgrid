@@ -6,10 +6,10 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, DOMAIN
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from .controller import SmartGrid
+from .v2.smartgrid_v2 import SmartGridV2
 from .const import DATA_SCHEDULE, DATA_LAST_UPDATED, DATA_SWITCHES, DATA_REPORT, SMARTGRID_DATA, SWITCH_PICKLE_FILE, \
     SWITCH_PREFIX, SMARTGRID_ENABLED, DATA_CHARGE_NOW
 from .dataclass import SmartGridDataSchedule
@@ -18,16 +18,19 @@ _LOGGER = logging.getLogger(__name__)
 MIDNIGHT_TASK = "midnight_"
 
 
+def pickle_file() -> str:
+    return os.getcwd() + "/" + SWITCH_PICKLE_FILE
+
 def load_switch_values() -> list[str]:
-    if os.path.exists(SWITCH_PICKLE_FILE):
-        with open(SWITCH_PICKLE_FILE, "rb") as file:
+    if os.path.exists(pickle_file()):
+        with open(pickle_file(), "rb") as file:
             return pickle.load(file)
     else:
         return []
 
 
 def save_switch_values(data: list[str]):
-    with open(SWITCH_PICKLE_FILE, "wb") as file:
+    with open(pickle_file(), "wb") as file:
         pickle.dump(data, file)
 
 
@@ -38,7 +41,7 @@ class SmartGridCoordinator(DataUpdateCoordinator[defaultdict]):
             self,
             hass: HomeAssistant,
             entry: ConfigEntry,
-            controller: SmartGrid
+            controller: SmartGridV2
     ) -> None:
         """Initialise the coordinator."""
 
@@ -70,12 +73,16 @@ class SmartGridCoordinator(DataUpdateCoordinator[defaultdict]):
         else:
             self.switches = await self.hass.async_add_executor_job(load_switch_values)
 
+
+        # TODO: Sync time to e.g. 1359, 1315, 1329 so it runs just before the periods change
+        # need to try and prevent it from changing its mind too often
+
         if not self.schedule_timestamp or self.now > self.schedule_timestamp + timedelta(minutes=10):
-            data = await self.hass.async_add_executor_job(self.controller.main)
+            data = await self.hass.async_add_executor_job(self.controller.start_program)
 
             if not data:
                 _LOGGER.warning("Unable to obtain schedule data, will wait until "
-                                "Octopus Enmergy integration can supply rates")
+                                "Octopus Energy integration can supply rates")
                 return {}
 
             self.schedule = data[DATA_SCHEDULE]
@@ -149,7 +156,7 @@ class SmartGridCoordinator(DataUpdateCoordinator[defaultdict]):
     def get_should_be_charging_now(self) -> bool:
         cp = self.get_current_charging_period()
         if SMARTGRID_ENABLED in self.switches:
-            return cp in self.schedule.force_charge
+            return cp in self.schedule.charging_periods
         else:
             time_string = str(cp.hour).zfill(2) + str(cp.minute).zfill(2)
             entity = f"{SWITCH_PREFIX}{time_string}"

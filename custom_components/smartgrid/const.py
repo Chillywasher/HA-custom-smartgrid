@@ -1,5 +1,7 @@
 DOMAIN = "smartgrid"
 
+KWH_DP = 3
+
 HOUR = "hour"
 MINUTE = "minute"
 
@@ -26,6 +28,8 @@ TIMESTAMP = "timestamp"
 CONF_CURRENT_RATES_SENSOR = "current_rates_sensor"
 CONF_NEXT_DAY_RATES_SENSOR = "next_day_rates_sensor"
 CONF_BATTERY_SOC_SENSOR = "battery_soc_sensor"
+CONF_BATTERY_CAPACITY_SENSOR = "battery_capacity_sensor"
+CONF_BATTERY_MIN_SOC_SENSOR = "battery_min_soc_sensor"
 
 CHARGING_PERIODS = "charging_periods"
 CHARGING_TIMES = "charging_times"
@@ -38,5 +42,5 @@ SMARTGRID_DATA = "smartgrid_data"
 TOTAL_COST = "total_cost"
 SMARTGRID_ENABLED = "enabled"
 
-SWITCH_PICKLE_FILE = "./smartgrid_switches.pkl"
+SWITCH_PICKLE_FILE = "smartgrid_switches.pkl"
 SWITCH_PREFIX = "charging_period_"
